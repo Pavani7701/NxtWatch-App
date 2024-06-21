@@ -126,7 +126,7 @@ export const NoVideoDescription = styled.p`
   color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
   margin-top: 0;
 `
-export const RetryButton = styled.button`
+export const RedirectBtn = styled.button`
   background-color: #4f46e5;
   color: #ffffff;
   font-family: 'Roboto';

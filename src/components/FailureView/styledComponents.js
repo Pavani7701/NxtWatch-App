@@ -13,18 +13,7 @@ export const FailedImage = styled.img`
     width: 400px;
   }
 `
-export const FailedHeading = styled.h1`
-  font-family: 'Roboto';
-  font-size: 25px;
-  color: ${props => (props.isDarkTheme ? '#f1f5f9' : '#1e293b')};
-`
-export const FailedDescription = styled.p`
-  font-family: 'Roboto';
-  font-size: 18px;
-  color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
-  margin-top: 0;
-`
-export const RetryButton = styled.button`
+export const RetryBtn = styled.button`
   background-color: #4f46e5;
   color: #ffffff;
   font-family: 'Roboto';
@@ -39,4 +28,16 @@ export const RetryButton = styled.button`
   width: 100px;
   cursor: pointer;
   outline: none;
+`
+
+export const FailedHeading = styled.h1`
+  font-family: 'Roboto';
+  font-size: 25px;
+  color: ${props => (props.isDarkTheme ? '#f1f5f9' : '#1e293b')};
+`
+export const FailedDescription = styled.p`
+  font-family: 'Roboto';
+  font-size: 18px;
+  color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
+  margin-top: 0;
 `

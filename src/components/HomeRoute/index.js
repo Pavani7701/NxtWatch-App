@@ -24,7 +24,7 @@ import {
   NoVideosImage,
   NoVideoHeading,
   NoVideoDescription,
-  RetryButton,
+  RedirectBtn,
 } from './styledComponents'
 
 const apiStatusConstants = {
@@ -58,6 +58,7 @@ class HomeRoute extends Component {
       method: 'GET',
     }
     const response = await fetch(url, options)
+    console.log(response)
     if (response.ok === true) {
       const data = await response.json()
       const updatedData = data.videos.map(eachVideo => ({
@@ -125,9 +126,7 @@ class HomeRoute extends Component {
               <NoVideoDescription isDarkTheme={isDarkTheme}>
                 Try different key words or remove search filter
               </NoVideoDescription>
-              <RetryButton type="button" onClick={this.onRetry}>
-                Retry
-              </RetryButton>
+              <RedirectBtn onClick={this.onRetry}>Retry</RedirectBtn>
             </NoVideoView>
           )
         }}
