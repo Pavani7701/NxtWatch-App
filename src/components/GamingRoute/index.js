@@ -1,32 +1,29 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-
 import {SiYoutubegaming} from 'react-icons/si'
-
 import Header from '../Header'
-import NavigationBar from '../NavigationBar'
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
-import FailureView from '../FailureView'
+import SideBar from '../SideBar'
 import GamingVideoCard from '../GamingVideoCard'
-
+import FailureView from '../FailureView'
+import NxtWatchContext from '../../context/NxtWatchContext'
 import {
   GamingContainer,
-  GamingTitleIconContainer,
-  GamingVideoTitle,
+  TitleIconContainer,
+  IconContainer,
+  GamingVideoHeading,
   GamingVideoList,
-  GamingText,
   LoaderContainer,
 } from './styledComponents'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
-  failure: 'FAILURE',
   inProgress: 'IN_PROGRESS',
+  failure: 'FAILURE',
 }
 
-class GamingVideos extends Component {
+class GamingRoute extends Component {
   state = {
     gamingVideos: [],
     apiStatus: apiStatusConstants.initial,
@@ -47,7 +44,7 @@ class GamingVideos extends Component {
       method: 'GET',
     }
     const response = await fetch(url, options)
-    if (response.ok) {
+    if (response.ok === true) {
       const data = await response.json()
       const updatedData = data.videos.map(eachVideo => ({
         id: eachVideo.id,
@@ -64,9 +61,13 @@ class GamingVideos extends Component {
     }
   }
 
-  renderLoadingView = () => (
+  onRetry = () => {
+    this.getVideos()
+  }
+
+  renderLoaderView = () => (
     <LoaderContainer data-testid="loader">
-      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </LoaderContainer>
   )
 
@@ -81,10 +82,6 @@ class GamingVideos extends Component {
     )
   }
 
-  onRetry = () => {
-    this.getVideos()
-  }
-
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
 
   renderGamingVideos = () => {
@@ -93,10 +90,10 @@ class GamingVideos extends Component {
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderVideosView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoaderView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
-      case apiStatusConstants.inProgress:
-        return this.renderLoadingView()
       default:
         return null
     }
@@ -104,32 +101,30 @@ class GamingVideos extends Component {
 
   render() {
     return (
-      <ThemeAndVideoContext.Consumer>
+      <NxtWatchContext.Consumer>
         {value => {
           const {isDarkTheme} = value
-
-          const bgColor = isDarkTheme ? '#0f0f0f' : '#f9f9f9'
-          const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
-
           return (
-            <div>
+            <>
               <Header />
-              <NavigationBar />
-              <GamingContainer data-testid="gaming" bgColor={bgColor}>
-                <GamingVideoTitle>
-                  <GamingTitleIconContainer>
-                    <SiYoutubegaming size={35} color="#ff0000" />
-                  </GamingTitleIconContainer>
-                  <GamingText color={textColor}>Gaming</GamingText>
-                </GamingVideoTitle>
+              <SideBar />
+              <GamingContainer data-testid="gaming" isDarkTheme={isDarkTheme}>
+                <TitleIconContainer isDarkTheme={isDarkTheme}>
+                  <IconContainer>
+                    <SiYoutubegaming size={30} color="#ff0000" />
+                  </IconContainer>
+                  <GamingVideoHeading isDarkTheme={isDarkTheme}>
+                    Gaming
+                  </GamingVideoHeading>
+                </TitleIconContainer>
                 {this.renderGamingVideos()}
               </GamingContainer>
-            </div>
+            </>
           )
         }}
-      </ThemeAndVideoContext.Consumer>
+      </NxtWatchContext.Consumer>
     )
   }
 }
 
-export default GamingVideos
+export default GamingRoute

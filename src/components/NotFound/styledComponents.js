@@ -4,7 +4,7 @@ export const NotFoundContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.bgColor};
+  background-color: ${props => (props.isDarkTheme ? '#181818' : '#f9f9f9')};
   min-height: 92vh;
   margin-top: 60px;
   margin-bottom: 60px;
@@ -32,13 +32,13 @@ export const NotFoundVideosImage = styled.img`
 export const NotFoundVideosHeading = styled.h1`
   font-family: 'Roboto';
   font-size: 25px;
-  color: ${props => props.headingColor};
+  color: ${props => (props.isDarkTheme ? '#f1f5f9' : '#1e293b')};
   text-align: center;
 `
 
-export const NotFoundVideosNote = styled.p`
+export const NotFoundVideosDescription = styled.p`
   font-family: 'Roboto';
   font-size: 18px;
-  color: ${props => props.noteColor};
+  color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
   text-align: center;
 `

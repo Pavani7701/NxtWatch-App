@@ -12,7 +12,7 @@ import {
   Dot,
 } from './styledComponents'
 
-const HomeVideoCard = props => {
+const VideoCard = props => {
   const {videoDetails} = props
   const {
     id,
@@ -52,4 +52,4 @@ const HomeVideoCard = props => {
   )
 }
 
-export default HomeVideoCard
+export default VideoCard

@@ -1,12 +1,12 @@
 import React from 'react'
 
-const ThemeAndVideoContext = React.createContext({
+const NxtWatchContext = React.createContext({
   isDarkTheme: false,
   savedVideos: [],
   activeTab: 'Home',
+  addSavedVideos: () => {},
   toggleTheme: () => {},
   changeTab: () => {},
-  addVideo: () => {},
 })
 
-export default ThemeAndVideoContext
+export default NxtWatchContext

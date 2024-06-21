@@ -1,60 +1,61 @@
-import styled from 'styled-components'
 import {Link} from 'react-router-dom'
+import styled from 'styled-components'
 
 export const ListItem = styled.li`
-  background: none;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-self: center;
+  align-items: center;
+  margin-bottom: 40px;
   @media screen and (min-width: 768px) {
     width: 280px;
     margin-right: 20px;
   }
 `
-
-export const ThumbNailImage = styled.img`
+export const ThumbnailImage = styled.img`
   width: 100%;
 `
-export const VideoDetails = styled.div`
+export const VideoDetailsContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  margin-top: 10px;
 `
 export const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
   border-radius: 50px;
-  margin: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
 `
-export const ContentSection = styled.div`
+export const VideoDescription = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 8px;
-`
-export const Title = styled.p`
-  font-family: 'Roboto';
-  font-size: 15px;
-  color: ${props => props.color};
-`
-export const ChannelName = styled.p`
-  font-family: 'Roboto';
-  font-size: 13px;
-  color: ${props => props.color};
-`
-export const ViewsAndDate = styled.p`
-  font-family: 'Roboto';
-  font-size: 12px;
-  color: ${props => props.color};
-`
-export const Dot = styled.span`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  padding-left: 5px;
-  padding-right: 5px;
 `
 export const NavLink = styled(Link)`
   text-decoration: none;
+`
+export const Heading = styled.p`
+  color: ${props => (props.isDarkTheme ? '#ffffff' : '#181818')};
+  font-family: 'Roboto';
+  font-size: 15px;
+`
+export const ChannelName = styled.p`
+  color: #616e7c;
+  font-family: 'Roboto';
+  font-size: 13px;
+  margin-top: 0px;
+`
+export const ViewsAndDate = styled.p`
+  color: #616e7c;
+  font-family: 'Roboto';
+  font-size: 12px;
+  margin-top: 0px;
+`
+export const Dot = styled.span`
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  padding-left: 5px;
+  padding-right: 5px;
 `

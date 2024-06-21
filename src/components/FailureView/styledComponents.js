@@ -5,38 +5,38 @@ export const FailedView = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: none;
+  padding: 20px;
 `
-
 export const FailedImage = styled.img`
   width: 200px;
   @media screen and (min-width: 768px) {
-    width: 450px;
+    width: 400px;
   }
 `
 export const FailedHeading = styled.h1`
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-size: 25px;
-  color: ${props => props.headingColor};
-  text-align: center;
+  color: ${props => (props.isDarkTheme ? '#f1f5f9' : '#1e293b')};
 `
-
-export const FailedNote = styled.p`
-  font-family: Roboto;
+export const FailedDescription = styled.p`
+  font-family: 'Roboto';
   font-size: 18px;
-  color: ${props => props.noteColor};
-  text-align: center;
+  color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
+  margin-top: 0;
 `
-
 export const RetryButton = styled.button`
-  border: none;
   background-color: #4f46e5;
-  border-radius: 3px;
   color: #ffffff;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
-  font-family: Roboto;
-  font-size: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 40px;
+  width: 100px;
+  cursor: pointer;
+  outline: none;
 `

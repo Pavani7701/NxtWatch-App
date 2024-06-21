@@ -1,32 +1,29 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-
 import {HiFire} from 'react-icons/hi'
-
 import Header from '../Header'
-import NavigationBar from '../NavigationBar'
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
+import SideBar from '../SideBar'
+import VideoCard from '../VideoCard'
 import FailureView from '../FailureView'
-import TrendingVideoCard from '../TrendingVideoCard'
-
+import NxtWatchContext from '../../context/NxtWatchContext'
 import {
   TrendingContainer,
   TitleIconContainer,
-  TrendingVideoTitle,
+  IconContainer,
+  TrendingVideoHeading,
   TrendingVideoList,
-  TrendingText,
   LoaderContainer,
 } from './styledComponents'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
-  failure: 'FAILURE',
   inProgress: 'IN_PROGRESS',
+  failure: 'FAILURE',
 }
 
-class TrendingVideos extends Component {
+class TrendingRoute extends Component {
   state = {
     trendingVideos: [],
     apiStatus: apiStatusConstants.initial,
@@ -47,16 +44,16 @@ class TrendingVideos extends Component {
       method: 'GET',
     }
     const response = await fetch(url, options)
-    if (response.ok) {
+    if (response.ok === true) {
       const data = await response.json()
       const updatedData = data.videos.map(eachVideo => ({
         id: eachVideo.id,
         title: eachVideo.title,
         thumbnailUrl: eachVideo.thumbnail_url,
-        viewCount: eachVideo.view_count,
-        publishedAt: eachVideo.published_at,
         name: eachVideo.channel.name,
         profileImageUrl: eachVideo.channel.profile_image_url,
+        viewCount: eachVideo.view_count,
+        publishedAt: eachVideo.published_at,
       }))
       this.setState({
         trendingVideos: updatedData,
@@ -67,9 +64,13 @@ class TrendingVideos extends Component {
     }
   }
 
-  renderLoadingView = () => (
+  onRetry = () => {
+    this.getVideos()
+  }
+
+  renderLoaderView = () => (
     <LoaderContainer data-testid="loader">
-      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </LoaderContainer>
   )
 
@@ -78,14 +79,10 @@ class TrendingVideos extends Component {
     return (
       <TrendingVideoList>
         {trendingVideos.map(eachVideo => (
-          <TrendingVideoCard key={eachVideo.id} videoDetails={eachVideo} />
+          <VideoCard key={eachVideo.id} videoDetails={eachVideo} />
         ))}
       </TrendingVideoList>
     )
-  }
-
-  onRetry = () => {
-    this.getVideos()
   }
 
   renderFailureView = () => <FailureView onRetry={this.onRetry} />
@@ -96,10 +93,10 @@ class TrendingVideos extends Component {
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderVideosView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoaderView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
-      case apiStatusConstants.inProgress:
-        return this.renderLoadingView()
       default:
         return null
     }
@@ -107,32 +104,34 @@ class TrendingVideos extends Component {
 
   render() {
     return (
-      <ThemeAndVideoContext.Consumer>
+      <NxtWatchContext.Consumer>
         {value => {
           const {isDarkTheme} = value
-
-          const bgColor = isDarkTheme ? '#0f0f0f' : '#f9f9f9'
-          const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
-
           return (
-            <div data-testid="trending">
+            <>
               <Header />
-              <NavigationBar />
-              <TrendingContainer data-testid="trending" bgColor={bgColor}>
-                <TrendingVideoTitle>
-                  <TitleIconContainer>
-                    <HiFire size={35} color="#ff0000" />
-                  </TitleIconContainer>
-                  <TrendingText color={textColor}>Trending</TrendingText>
-                </TrendingVideoTitle>
+              <SideBar />
+              <TrendingContainer
+                data-testid="trending"
+                isDarkTheme={isDarkTheme}
+              >
+                <TitleIconContainer isDarkTheme={isDarkTheme}>
+                  <IconContainer>
+                    <HiFire size={30} color="#ff0000" />
+                  </IconContainer>
+
+                  <TrendingVideoHeading isDarkTheme={isDarkTheme}>
+                    Trending
+                  </TrendingVideoHeading>
+                </TitleIconContainer>
                 {this.renderTrendingVideos()}
               </TrendingContainer>
-            </div>
+            </>
           )
         }}
-      </ThemeAndVideoContext.Consumer>
+      </NxtWatchContext.Consumer>
     )
   }
 }
 
-export default TrendingVideos
+export default TrendingRoute

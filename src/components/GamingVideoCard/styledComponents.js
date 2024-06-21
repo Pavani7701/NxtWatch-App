@@ -1,44 +1,47 @@
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
-export const ItemLink = styled(Link)`
-  text-decoration: none;
-`
-
-export const GamingListItem = styled.li`
-  background: none;
+export const ListItem = styled.li`
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
   @media screen and (min-width: 768px) {
     width: 280px;
     margin-right: 20px;
   }
 `
-export const GamingThumbNailImage = styled.img`
+export const ThumbnailImage = styled.img`
   width: 100vw;
   height: 300px;
-  align-self: center;
+  object-fit: contain;
   @media screen and (min-width: 768px) {
     width: 280px;
   }
 `
-
-export const GamingContentSection = styled.div`
+export const VideoDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 8px;
+  @media screen and (min-width: 768px) {
+    width: 85%;
+  }
 `
-export const GamingTitle = styled.p`
-  font-family: Roboto;
-  font-size: 15px;
-  color: ${props => props.color};
-  margin-bottom: 0px;
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
 `
-
-export const GamingViewsAndDate = styled.p`
-  font-family: Roboto;
-  font-size: 12px;
-  color: ${props => props.color};
+export const Heading = styled.p`
+  color: ${props => (props.isDarkTheme ? '#ffffff' : '#181818')};
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`
+export const ViewsAndDate = styled.p`
+  color: #616e7c;
+  font-family: 'Roboto';
+  font-size: 13px;
+  margin-top: 0px;
 `

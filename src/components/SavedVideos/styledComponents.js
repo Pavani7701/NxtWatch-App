@@ -1,24 +1,23 @@
 import styled from 'styled-components'
 
 export const SavedContainer = styled.div`
-  background-color: ${props => props.bgColor};
+  background-color: ${props => (props.isDarkTheme ? '#0f0f0f' : '#f9f9f9')};
   min-height: 100vh;
-  margin-top: 60px;
-  margin-bottom: 60px;
   overflow-y: auto;
+  padding-top: 80px;
   @media screen and (min-width: 768px) {
     margin-left: 250px;
-    margin-bottom: 0px;
   }
 `
-export const SavedVideoTitle = styled.div`
+export const TitleIconContainer = styled.div`
   display: flex;
   align-items: center;
 `
-export const SavedTitleIconContainer = styled.div`
+export const IconContainer = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 80px;
+  border-radius: 50%;
+  background-color: ${props => (props.isDarkTheme ? '#181818' : '#f9f9f9')};
   margin-left: 10px;
   margin-right: 10px;
   display: flex;
@@ -28,44 +27,42 @@ export const SavedTitleIconContainer = styled.div`
     margin-left: 40px;
   }
 `
-export const SavedText = styled.h1`
-  font-family: Roboto;
+export const SavedVideoHeading = styled.h1`
+  font-family: 'Roboto';
   font-size: 25px;
-  color: ${props => props.color};
+  color: ${props => (props.isDarkTheme ? '#f9f9f9' : '#181818')};
   @media screen and (min-width: 768px) {
     font-size: 35px;
+  }
 `
-export const SavedVideoList = styled.ul`
+export const SavedVideosList = styled.ul`
   list-style-type: none;
   display: flex;
   flex-direction: column;
   margin: 0px;
   padding: 0px;
 `
-export const NoSavedVideosView = styled.div`
+export const NoSavedVideoView = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: none;
+  padding: 20px;
 `
-
 export const NoSavedVideosImage = styled.img`
   width: 200px;
   @media screen and (min-width: 768px) {
-    width: 450px;
+    width: 400px;
   }
 `
-export const NoSavedVideosHeading = styled.h1`
-  font-family: Roboto;
+export const NoSavedVideoHeading = styled.h1`
+  font-family: 'Roboto';
   font-size: 25px;
-  color: ${props => props.headingColor};
-  text-align: center;
+  color: ${props => (props.isDarkTheme ? '#f1f5f9' : '#1e293b')};
 `
-
-export const NoSavedVideosNote = styled.p`
-  font-family: Roboto;
+export const NoSavedVideoText = styled.p`
+  font-family: 'Roboto';
   font-size: 18px;
-  color: ${props => props.noteColor};
-  text-align: center;
+  color: ${props => (props.isDarkTheme ? '#e2e8f0' : '#475569')};
+  margin-top: 0;
 `

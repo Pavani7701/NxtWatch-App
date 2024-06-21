@@ -1,12 +1,11 @@
+import NxtWatchContext from '../../context/NxtWatchContext'
 import {
   FailedView,
   FailedImage,
   FailedHeading,
-  FailedNote,
+  FailedDescription,
   RetryButton,
 } from './styledComponents'
-
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
 
 const FailureView = props => {
   const {onRetry} = props
@@ -16,33 +15,28 @@ const FailureView = props => {
   }
 
   return (
-    <ThemeAndVideoContext.Consumer>
+    <NxtWatchContext.Consumer>
       {value => {
         const {isDarkTheme} = value
-        const headingColor = isDarkTheme ? '#f1f5f9' : '#1e293b'
-        const noteColor = isDarkTheme ? '#e2e8f0' : '#475569'
-
-        const failureImageUrl = isDarkTheme
+        const failureImage = isDarkTheme
           ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
           : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
 
         return (
           <FailedView>
-            <FailedImage src={failureImageUrl} alt="failure view" />
-            <FailedHeading headingColor={headingColor}>
-              Oops! Something Went Wrong
-            </FailedHeading>
-            <FailedNote noteColor={noteColor}>
-              We are having some trouble to complete your request. <br /> Please
-              try again later.
-            </FailedNote>
+            <FailedImage src={failureImage} alt="failure view" />
+            <FailedHeading>Oops! Something Went Wrong</FailedHeading>
+            <FailedDescription>
+              We are having some trouble to complete your request. Please try
+              again.
+            </FailedDescription>
             <RetryButton type="button" onClick={onClickRetry}>
               Retry
             </RetryButton>
           </FailedView>
         )
       }}
-    </ThemeAndVideoContext.Consumer>
+    </NxtWatchContext.Consumer>
   )
 }
 

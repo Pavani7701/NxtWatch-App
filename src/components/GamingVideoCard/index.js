@@ -1,39 +1,35 @@
-import ThemeAndVideoContext from '../../context/ThemeAndVideoContext'
-
+import NxtWatchContext from '../../context/NxtWatchContext'
 import {
-  ItemLink,
-  GamingListItem,
-  GamingThumbNailImage,
-  GamingContentSection,
-  GamingTitle,
-  GamingViewsAndDate,
+  NavLink,
+  ListItem,
+  ThumbnailImage,
+  VideoDetailsContainer,
+  Heading,
+  ViewsAndDate,
 } from './styledComponents'
 
 const GamingVideoCard = props => {
   const {videoDetails} = props
-  const {id, title, thumbnailUrl, viewCount} = videoDetails
+  const {id, title, viewCount, thumbnailUrl} = videoDetails
 
   return (
-    <ThemeAndVideoContext.Consumer>
+    <NxtWatchContext.Consumer>
       {value => {
         const {isDarkTheme} = value
-        const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
 
         return (
-          <ItemLink to={`/videos/${id}`} className="link">
-            <GamingListItem>
-              <GamingThumbNailImage src={thumbnailUrl} alt="video thumbnail" />
-              <GamingContentSection>
-                <GamingTitle color={textColor}>{title}</GamingTitle>
-                <GamingViewsAndDate color={textColor}>
-                  {viewCount} Watching Worldwide
-                </GamingViewsAndDate>
-              </GamingContentSection>
-            </GamingListItem>
-          </ItemLink>
+          <NavLink to={`/videos/${id}`}>
+            <ListItem>
+              <ThumbnailImage src={thumbnailUrl} alt="video thumbnail" />
+              <VideoDetailsContainer>
+                <Heading isDarkTheme={isDarkTheme}>{title}</Heading>
+                <ViewsAndDate>{viewCount} Watching Worldwide</ViewsAndDate>
+              </VideoDetailsContainer>
+            </ListItem>
+          </NavLink>
         )
       }}
-    </ThemeAndVideoContext.Consumer>
+    </NxtWatchContext.Consumer>
   )
 }
 

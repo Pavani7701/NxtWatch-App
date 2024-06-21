@@ -1,29 +1,18 @@
 import {Component} from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
-
 import ProtectedRoute from './components/ProtectedRoute'
-import Login from './components/Login'
-import Home from './components/Home'
-import VideoDetailView from './components/VideoDetailView'
-import TrendingVideos from './components/TrendingVideos'
-import GamingVideos from './components/GamingVideos'
+import LoginRoute from './components/LoginRoute'
+import HomeRoute from './components/HomeRoute'
+import TrendingRoute from './components/TrendingRoute'
+import GamingRoute from './components/GamingRoute'
 import SavedVideos from './components/SavedVideos'
+import VideoDetails from './components/VideoDetails'
 import NotFound from './components/NotFound'
-
-import ThemeAndVideoContext from './context/ThemeAndVideoContext'
-
+import NxtWatchContext from './context/NxtWatchContext'
 import './App.css'
 
 class App extends Component {
-  state = {
-    savedVideos: [],
-    isDarkTheme: false,
-    activeTab: 'Home',
-  }
-
-  changeTab = tab => {
-    this.setState({activeTab: tab})
-  }
+  state = {isDarkTheme: false, activeTab: 'Home', savedVideos: []}
 
   toggleTheme = () => {
     this.setState(prevState => ({
@@ -31,7 +20,13 @@ class App extends Component {
     }))
   }
 
-  addVideo = video => {
+  changeTab = tab => {
+    this.setState({
+      activeTab: tab,
+    })
+  }
+
+  addSavedVideos = video => {
     const {savedVideos} = this.state
     const index = savedVideos.findIndex(eachVideo => eachVideo.id === video.id)
     if (index === -1) {
@@ -42,42 +37,38 @@ class App extends Component {
     }
   }
 
-  removeVideo = id => {
+  removeSavedVideos = id => {
     const {savedVideos} = this.state
-    const updatedSavedVideos = savedVideos.filter(
+    const updateSavedVideos = savedVideos.filter(
       eachVideo => eachVideo.id !== id,
     )
-    this.setState({savedVideos: updatedSavedVideos})
+    this.setState({savedVideos: updateSavedVideos})
   }
 
   render() {
-    const {savedVideos, isDarkTheme, activeTab} = this.state
+    const {isDarkTheme, activeTab, savedVideos} = this.state
     return (
-      <ThemeAndVideoContext.Provider
+      <NxtWatchContext.Provider
         value={{
-          savedVideos,
           isDarkTheme,
           activeTab,
+          savedVideos,
           toggleTheme: this.toggleTheme,
-          addVideo: this.addVideo,
+          addSavedVideos: this.addSavedVideos,
           changeTab: this.changeTab,
         }}
       >
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <ProtectedRoute exact path="/" component={Home} />
-          <ProtectedRoute
-            exact
-            path="/videos/:id"
-            component={VideoDetailView}
-          />
-          <ProtectedRoute exact path="/trending" component={TrendingVideos} />
-          <ProtectedRoute exact path="/gaming" component={GamingVideos} />
+          <Route exact path="/login" component={LoginRoute} />
+          <ProtectedRoute exact path="/" component={HomeRoute} />
+          <ProtectedRoute exact path="/trending" component={TrendingRoute} />
+          <ProtectedRoute exact path="/gaming" component={GamingRoute} />
           <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
-          <Route path="/not-found" component={NotFound} />
-          <Redirect to="not-found" />
+          <ProtectedRoute exact path="/videos/:id" component={VideoDetails} />
+          <Route exact path="/not-found" component={NotFound} />
+          <Redirect to="/not-found" />
         </Switch>
-      </ThemeAndVideoContext.Provider>
+      </NxtWatchContext.Provider>
     )
   }
 }

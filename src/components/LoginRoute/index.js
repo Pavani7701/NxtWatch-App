@@ -1,22 +1,23 @@
 import {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
+import {Redirect} from 'react-router-dom'
 
 import {
-  LoginBgContainer,
+  AppContainer,
   FormContainer,
+  LoginLogo,
   InputContainer,
-  LoginLogoImage,
-  LabelInput,
-  UserInput,
-  CheckboxContainer,
-  CheckboxInput,
-  ShowPasswordLabel,
   LoginButton,
+  InputLabel,
+  PasswordInput,
+  UsernameInput,
+  CheckboxContainer,
+  Checkbox,
+  ShowPassword,
   SubmitError,
 } from './styledComponents'
 
-class Login extends Component {
+class LoginRoute extends Component {
   state = {
     username: '',
     password: '',
@@ -33,50 +34,48 @@ class Login extends Component {
     this.setState({password: event.target.value})
   }
 
-  onClickShowPassword = () => {
-    this.setState(prevState => ({
-      showPassword: !prevState.showPassword,
-    }))
+  onShowPassword = () => {
+    this.setState(prevState => ({showPassword: !prevState.showPassword}))
   }
 
-  renderUsernameField = () => {
+  renderUserNameField = () => {
     const {username} = this.state
     return (
       <>
-        <LabelInput htmlFor="username">USERNAME</LabelInput>
-        <UserInput
+        <InputLabel htmlFor="username">USERNAME</InputLabel>
+        <UsernameInput
           type="text"
           id="username"
-          value={username}
-          onChange={this.onChangeUsername}
           placeholder="Username"
+          value={username}
+          name="username"
+          onChange={this.onChangeUsername}
         />
       </>
     )
   }
 
   renderPasswordField = () => {
-    const {showPassword, password} = this.state
-    const passwordType = showPassword ? 'text' : 'password'
+    const {password, showPassword} = this.state
+    const inputType = showPassword ? 'text' : 'password'
     return (
       <>
-        <LabelInput htmlFor="password">PASSWORD</LabelInput>
-        <UserInput
-          type={passwordType}
+        <InputLabel htmlFor="password">PASSWORD</InputLabel>
+        <PasswordInput
+          type={inputType}
           id="password"
-          value={password}
-          onChange={this.onChangePassword}
           placeholder="Password"
+          value={password}
+          name="password"
+          onChange={this.onChangePassword}
         />
         <CheckboxContainer>
-          <CheckboxInput
+          <Checkbox
             type="checkbox"
             id="checkbox"
-            onChange={this.onClickShowPassword}
+            onChange={this.onShowPassword}
           />
-          <ShowPasswordLabel htmlFor="checkbox">
-            Show Password
-          </ShowPasswordLabel>
+          <ShowPassword htmlFor="checkbox">Show Password</ShowPassword>
         </CheckboxContainer>
       </>
     )
@@ -88,25 +87,29 @@ class Login extends Component {
     history.replace('/')
   }
 
-  onSubmitError = errorMsg => {
-    this.setState({showSubmitError: true, errorMsg})
+  onSubmitFailure = errorMsg => {
+    console.log('Error Message:', errorMsg)
+    this.setState({
+      showSubmitError: true,
+      errorMsg,
+    })
   }
 
-  OnSubmitForm = async event => {
+  submitForm = async event => {
     event.preventDefault()
     const {username, password} = this.state
     const userDetails = {username, password}
-    const LoginUrl = 'https://apis.ccbp.in/login'
+    const url = 'https://apis.ccbp.in/login'
     const options = {
       method: 'POST',
       body: JSON.stringify(userDetails),
     }
-    const response = await fetch(LoginUrl, options)
+    const response = await fetch(url, options)
     const data = await response.json()
     if (response.ok === true) {
       this.onSubmitSuccess(data.jwt_token)
     } else {
-      this.onSubmitError(data.error_msg)
+      this.onSubmitFailure(data.error_msg)
     }
   }
 
@@ -117,20 +120,20 @@ class Login extends Component {
       return <Redirect to="/" />
     }
     return (
-      <LoginBgContainer>
-        <FormContainer onSubmit={this.OnSubmitForm}>
-          <LoginLogoImage
+      <AppContainer>
+        <FormContainer onSubmit={this.submitForm}>
+          <LoginLogo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
             alt="website logo"
           />
-          <InputContainer>{this.renderUsernameField()}</InputContainer>
+          <InputContainer>{this.renderUserNameField()}</InputContainer>
           <InputContainer>{this.renderPasswordField()}</InputContainer>
           <LoginButton type="submit">Login</LoginButton>
           {showSubmitError && <SubmitError>*{errorMsg}</SubmitError>}
         </FormContainer>
-      </LoginBgContainer>
+      </AppContainer>
     )
   }
 }
 
-export default Login
+export default LoginRoute
